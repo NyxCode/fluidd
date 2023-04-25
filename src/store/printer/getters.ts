@@ -699,9 +699,14 @@ export const getters: GetterTree<PrinterState, RootState> = {
     const heaters = [...state.printer.heaters.available_heaters as string[]]
       .sort((a, b) => a.localeCompare(b))
 
+    const drivers = Object.values(state.printer)
+      .filter(([k, v]) => k.startsWith("tmc2240"))
+      .map(([k, v]) => v)
+
     return [
       ...heaters,
-      ...sensors
+      ...sensors,
+      ...drivers
     ]
   },
 
